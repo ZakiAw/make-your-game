@@ -62,7 +62,8 @@ function moveChickens() {
     // Check if any chicken reaches the bottom
     if (chickenTop > game.clientHeight) {
 
-      alert("Game Over!");
+      lossAudio()
+      // alert("Game Over!");
       freezePage()
     }
   });
@@ -79,6 +80,7 @@ function isColliding(rect1, rect2) {
 
 // Game loop
 function gameLoop() {
+  level1Audio();
   movePlayer();
   moveBullets();
   moveChickens();
