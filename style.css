@@ -1,0 +1,41 @@
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #000;
+    color: white;
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+  #game {
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    border: 2px solid white;
+    overflow: hidden;
+  }
+  .player {
+    position: absolute;
+    bottom: 10%; /* Positioning from the bottom of the game area */
+    left: 50%;
+    width: 80px;
+    height: 80px;
+    background-image: url(https://cdn-icons-png.flaticon.com/256/1702/1702089.png);
+    background-size: cover;
+  }
+  .chicken {
+    position: absolute;
+    width: 80px;
+    height: 40px;
+    background-image: url(./chicken.png);
+    background-size: cover;
+  }
+  .bullet {
+    position: absolute;
+    width: 5px;
+    height: 10px;
+    background-color: red;
+    box-shadow: 0 0 3px #ff0000, 0 0 5px #0000ff;
+  }
