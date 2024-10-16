@@ -1,6 +1,6 @@
 const game = document.getElementById("game");
 const player = document.getElementById("player");
-const myScore = document.getElementById("score")
+const myScore = document.getElementById("score");
 let bullets = [];
 let chickens = [];
 let score = 0;
@@ -76,18 +76,30 @@ function moveBullets() {
     }
   });
 }
+function freezePage() {
+  const fragment = getDOMCopy();
 
-function moveChickens() {
-chickens.forEach((chicken) => {
-const chickenTop = parseInt(chicken.style.top);
-chicken.style.top = `${chickenTop + 1}px`; // Move chickens downwards
+  // Serialize the document fragment to HTML code.
+  const serializer = new XMLSerializer();
+  const htmlContent = serializer.serializeToString(fragment);
 
-// Check if any chicken reaches the bottom
-if (chickenTop > game.clientHeight) {
-alert("Game Over!");
-location.reload(); // Restart the game
+  // Replace the content.
+  document.open();
+  document.write(htmlContent);
+  document.close();
 }
-});
+function moveChickens() {
+  chickens.forEach((chicken) => {
+    const chickenTop = parseInt(chicken.style.top);
+    chicken.style.top = `${chickenTop + 1}px`; // Move chickens downwards
+
+    // Check if any chicken reaches the bottom
+    if (chickenTop > game.clientHeight) {
+
+      alert("Game Over!");
+      freezePage()
+    }
+  });
 }
 // Collision detection
 function isColliding(rect1, rect2) {
