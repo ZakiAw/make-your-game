@@ -1,10 +1,11 @@
 const game = document.getElementById("game");
 const player = document.getElementById("player");
 const myScore = document.getElementById("score");
-let bullets = [];
+
 let chickens = [];
 let score = 0;
 let keysPressed = {};
+let shootingInterval = null
 
 // Create chickens
 function createChickens() {
@@ -22,7 +23,7 @@ function createChickens() {
 function movePlayer() {
   const playerRect = player.getBoundingClientRect();
   const gameRect = game.getBoundingClientRect();
-
+  
   if (keysPressed["ArrowLeft"] && playerRect.left > gameRect.left) {
     player.style.left = `${playerRect.left - gameRect.left - 5}px`;
   }
@@ -38,44 +39,9 @@ function movePlayer() {
 }
 
 // Shoot bullets
-function shoot() {
-  const bullet = document.createElement("div");
-  bullet.classList.add("bullet");
-  bullet.style.left = `${player.offsetLeft + 37}px`;
-  bullet.style.top = `${player.offsetTop - 10}px`;
-  game.appendChild(bullet);
-  bullets.push(bullet);
-}
 
-// Move bullets
-function moveBullets() {
-  bullets.forEach((bullet, index) => {
-    const bulletTop = parseInt(bullet.style.top);
 
-    bullet.style.top = `${bulletTop - 4}px`; // Move bullet upwards
 
-    const bulletRect = bullet.getBoundingClientRect();
-
-    // Check for collision with chickens
-    chickens.forEach((chicken, chickenIndex) => {
-      if (isColliding(bulletRect, chicken.getBoundingClientRect())) {
-        game.removeChild(bullet);
-        game.removeChild(chicken);
-        bullets.splice(index, 1);
-        chickens.splice(chickenIndex, 1);
-        score++;
-        myScore.textContent = `Score: ${score}`;
-        console.log("Score:", score);
-      }
-    });
-
-    // Remove bullet if it goes off screen
-    if (bulletRect.bottom > game.getBoundingClientRect().bottom) {
-      game.removeChild(bullet);
-      bullets.splice(index, 1);
-    }
-  });
-}
 function freezePage() {
   const fragment = getDOMCopy();
 
@@ -119,21 +85,32 @@ function gameLoop() {
   requestAnimationFrame(gameLoop);
 }
 
+
 // Control the player and shoot bullets
 // Control the player and shoot bullets
 document.addEventListener("keydown", (event) => {
   keysPressed[event.key] = true;
 
+  // Update player background (just an example, replace with your actual image path)
+  player.style.backgroundImage = "url('./MovingShip1.png')";
+
   // Check for shooting
   if (event.key === " ") {
-    shoot();
+    laserAudio()
+    startShooting();
   }
 });
 
 document.addEventListener("keyup", (event) => {
   delete keysPressed[event.key];
+  if (Object.keys(keysPressed).length === 0) {
+    player.style.backgroundImage = "url('./StillShip1.png')";
+  }
+  // Stop shooting when space is released
+  if (event.key === " ") {
+    stopShooting();
+  }
 });
 
-// Start the game
 createChickens();
 gameLoop();

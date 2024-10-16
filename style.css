@@ -18,11 +18,11 @@ body {
   }
   .player {
     position: absolute;
-    bottom: 10%; /* Positioning from the bottom of the game area */
+    bottom: 10%;
     left: 50%;
     width: 80px;
     height: 80px;
-    background-image: url(https://cdn-icons-png.flaticon.com/256/1702/1702089.png);
+    background-image: url(./StillShip1.png);
     background-size: cover;
   }
   .chicken {
