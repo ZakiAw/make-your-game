@@ -1,6 +1,7 @@
 let bullets = [];
 
 function shoot() {
+    laserAudio();
     const bullet = document.createElement("div");
     bullet.classList.add("bullet");
     bullet.style.left = `${player.offsetLeft + 37}px`;
@@ -31,7 +32,7 @@ function moveBullets() {
       });
   
       // Remove bullet if it goes off screen
-      if (bulletRect.bottom > game.getBoundingClientRect().bottom) {
+      if (bulletRect.top < game.getBoundingClientRect().top) {
         game.removeChild(bullet);
         bullets.splice(index, 1);
       }

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Space Invaders</title>
+    <link rel="stylesheet" href="index.css" />
+    <link rel="icon" type="image/x-icon" href="./images/chicken.png">
+    <script src="sounds.js"></script>
+  </head>
+  <body>
+    <div id="menu">
+      <a><h2 class="menu-item">Speed</h2></a>
+      <a><h2 class="menu-item">Difficulty</h2></a>
+    </div>
+    <script>
+      const menuItems = document.querySelectorAll(".menu-item");
+      let currentIndex = 0;
+
+      function updateHighlight() {
+        menuItems.forEach((item, index) => {
+          switchAudio();
+          item.style.color = index === currentIndex ? "white" : "grey";
+        });
+      }
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "ArrowDown") {
+          currentIndex = (currentIndex + 1) % menuItems.length;
+          updateHighlight();
+
+        } else if (event.key === "ArrowUp") {
+          currentIndex =
+            (currentIndex - 1 + menuItems.length) % menuItems.length;
+          updateHighlight();
+
+        } else if (event.key === "Enter" || event.key === " ") {
+          menuItems[currentIndex].click();
+        } else if (event.key === "Escape") {
+            history.back()
+        }
+      });
+      menuItems.forEach((item, index) => {
+        item.addEventListener("mouseenter", () => {
+          currentIndex = index;
+          updateHighlight();
+        });
+      });
+      updateHighlight();
+    </script>
+  </body>
+</html>

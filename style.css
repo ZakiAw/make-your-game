@@ -1,41 +1,158 @@
-
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #000;
-    color: white;
-    margin: 0;
-    font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #000;
+  color: white;
+  margin: 0;
+  font-family: bit;
+}
+@font-face {
+  font-family: bit;
+  src: url(./font/8bit.ttf);
+}
+#game {
+  position: relative;
+  width: 1280px;
+  height: 1080px;
+  border: 2px solid white;
+  overflow: hidden;
+}
+#game > * {
+  z-index: 1;
+}
+.background {
+  background-image: url(./images/Space.png);
+  position: absolute;
+  top: -1930px;
+  left: 0;
+  width: 1920px;
+  height: 4000px;
+  animation: slide 30s linear infinite ; /* Change duration as needed */
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: 0;
+}
+
+.player {  
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  width: 80px;
+  height: 80px;
+  background-image: url(./images/StillShip1.png);
+  background-size: cover;
+  /* background-color: white;
+  clip-path: polygon(66% 12%,59% -14%, -32% 100%, 134% 100%) */
+}
+
+.chicken {
+  position: absolute;
+  width: 80px;
+  height: 40px;
+  background-image: url(./images/chicken.png);
+  background-size: cover;
+}
+
+.bullet {
+  position: absolute;
+  width: 5px;
+  height: 10px;
+  background-color: red;
+  box-shadow: 0 0 3px #ff0000, 0 0 5px #0000ff;
+}
+.bullet1 {
+  position: absolute;
+  width: 5px;
+  height: 10px;
+  background-color: rgb(255, 251, 0);
+  box-shadow: 0 0 3px #ff0000, 0 0 5px #ccff00;
+}
+#pauseMessage {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 50px;
+  background-color: rgba(47, 61, 61, 0.8);
+  color: white;
+  font-size: 30px;
+  border-radius: 10px;
+  text-align: center;
+  z-index: 100; 
+}
+
+.hidden {
+  display: none;
+}
+
+.visible {
+  display: block;
+}
+
+#gameOverBox {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 50px;
+  text-align: center;
+  font-size: 24px;
+  z-index: 1000;
+}
+
+#gameOverBox h1 {
+  margin: 0;
+  font-size: 48px;
+}
+
+#gameOverBox p {
+  font-size: 20px;
+}
+
+#restartButton {
+  padding: 10px 20px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+#hp{
+  position: absolute;
+  top :5%;
+  img {
+    width: 100px;
   }
-  #game {
-    position: relative;
-    width: 1920px;
-    height: 1080px;
-    border: 2px solid white;
-    overflow: hidden;
+}
+#timer{
+  position: absolute;
+  left: 48%;
+  font-size: x-large;
+  top: 6.5%;
+}
+#score{
+  position: absolute;
+  left: 72%;
+  font-size: x-large;
+  top: 6.5%;
+}
+#fps {
+  position: absolute;
+  right: 24.5%;
+  font-size: x-large;
+  bottom: 6.5%;
+}
+
+a{
+  text-decoration: none;
+}
+@keyframes slide {
+  0% {
+    transform: translateY(0);
   }
-  .player {
-    position: absolute;
-    bottom: 10%;
-    left: 50%;
-    width: 80px;
-    height: 80px;
-    background-image: url(./StillShip1.png);
-    background-size: cover;
+  100% {
+    transform: translateY(1920px); /* Adjust this value based on your image height */
   }
-  .chicken {
-    position: absolute;
-    width: 80px;
-    height: 40px;
-    background-image: url(./chicken.png);
-    background-size: cover;
-  }
-  .bullet {
-    position: absolute;
-    width: 5px;
-    height: 10px;
-    background-color: red;
-    box-shadow: 0 0 3px #ff0000, 0 0 5px #0000ff;
-  }
+}

@@ -1,29 +1,34 @@
 const game = document.getElementById("game");
 const player = document.getElementById("player");
 const myScore = document.getElementById("score");
+let Name;
 
-let chickens = [];
+// name save & work
+document.addEventListener("DOMContentLoaded", () => {
+  const playerNameInput = document.getElementById("name");
+  const startGameLink = document.getElementById("start-game");
+
+  startGameLink.addEventListener("click", (event) => {
+    event.preventDefault();
+    Name = playerNameInput.value;
+    localStorage.setItem("playerName", Name);
+    window.location.href = "game.html";
+  });
+});
+const playerName = localStorage.getItem("playerName");
+console.log(playerName);
+//--
+let spawns = 6;
 let score = 0;
+let health = 3;
 let keysPressed = {};
-let shootingInterval = null
+let shootingInterval = null;
+let pausedStartTime = 0;
 
-// Create chickens
-function createChickens() {
-  for (let i = 0; i < 8; i++) {
-    const chicken = document.createElement("div");
-    chicken.classList.add("chicken");
-    chicken.style.left = `${Math.random() * (game.clientWidth - 40)}px`;
-    chicken.style.top = `${i * 40}px`;
-    game.appendChild(chicken);
-    chickens.push(chicken);
-  }
-}
-
-// Move player
 function movePlayer() {
   const playerRect = player.getBoundingClientRect();
   const gameRect = game.getBoundingClientRect();
-  
+
   if (keysPressed["ArrowLeft"] && playerRect.left > gameRect.left) {
     player.style.left = `${playerRect.left - gameRect.left - 5}px`;
   }
@@ -38,36 +43,6 @@ function movePlayer() {
   }
 }
 
-// Shoot bullets
-
-
-
-function freezePage() {
-  const fragment = getDOMCopy();
-
-  // Serialize the document fragment to HTML code.
-  const serializer = new XMLSerializer();
-  const htmlContent = serializer.serializeToString(fragment);
-
-  // Replace the content.
-  document.open();
-  document.write(htmlContent);
-  document.close();
-}
-function moveChickens() {
-  chickens.forEach((chicken) => {
-    const chickenTop = parseInt(chicken.style.top);
-    chicken.style.top = `${chickenTop + 1}px`; // Move chickens downwards
-
-    // Check if any chicken reaches the bottom
-    if (chickenTop > game.clientHeight) {
-
-      lossAudio()
-      // alert("Game Over!");
-      freezePage()
-    }
-  });
-}
 // Collision detection
 function isColliding(rect1, rect2) {
   return !(
@@ -78,41 +53,103 @@ function isColliding(rect1, rect2) {
   );
 }
 
-// Game loop
-function gameLoop() {
-  level1Audio();
-  movePlayer();
-  moveBullets();
-  moveChickens();
-  requestAnimationFrame(gameLoop);
+function damage() {
+  chickens.forEach((chicken, chickenIndex) => {
+    if (
+      isColliding(
+        player.getBoundingClientRect(),
+        chicken.getBoundingClientRect()
+      )
+    ) {
+      health--;
+      game.removeChild(chicken);
+      chickens.splice(chickenIndex, 1);
+      hitAudio();
+      if (health == 0) {
+        changeHp.src = "./images/0hp.png";
+        showGameOver();
+      }
+      if (health == 1) {
+        changeHp.src = "./images/1hp.png";
+      }
+      if (health == 2) {
+        changeHp.src = "./images/2hp.png";
+      }
+    }
+  });
 }
 
-
-// Control the player and shoot bullets
-// Control the player and shoot bullets
+let lastcshoot = 0;
+let lastChickenSpawnTime = 0;
+// Game loop
+function gameLoop() {
+  const currentTime = Date.now();
+  if (!paused && !gameOver) {
+    if (currentTime - lastChickenSpawnTime > 5000) {
+      createChickens(spawns);
+      lastChickenSpawnTime = currentTime;
+    }
+    if (currentTime - lastcshoot > 4000) {
+      Cshoot();
+      lastcshoot = currentTime;
+    }
+    level1Audio();
+    movePlayer();
+    moveBullets();
+    moveCBullets();
+    moveChickens();
+    calculateFPS();
+    updateTimer();
+    damage();
+  }
+  requestAnimationFrame(gameLoop);
+}
+// natsheh++
+// Pause/Resume functionality
 document.addEventListener("keydown", (event) => {
-  keysPressed[event.key] = true;
+  if (event.key === "Escape") {
+    paused = !paused;
+    if (paused) {
+      pauseMessage.classList.remove("hidden");
+      pauseMessage.classList.add("visible");
+      pausedStartTime = Date.now();
+    } else {
+      pauseMessage.classList.remove("visible");
+      pauseMessage.classList.add("hidden");
+      pausedTime += Date.now() - pausedStartTime;
+      lastChickenSpawnTime += Date.now() - pausedStartTime;
+      lastcshoot += Date.now() - pausedStartTime;
+    }
+  }
 
-  // Update player background (just an example, replace with your actual image path)
-  player.style.backgroundImage = "url('./MovingShip1.png')";
-
-  // Check for shooting
-  if (event.key === " ") {
-    laserAudio()
-    startShooting();
+  if (!paused && !gameOver) {
+    keysPressed[event.key] = true;
+    if (
+      event.key === "ArrowDown" ||
+      event.key === "ArrowRight" ||
+      event.key === "ArrowUp" ||
+      event.key === "ArrowLeft"
+    )
+      player.style.backgroundImage = "url('./images/MovingShip1.png')";
+    if (event.key === " ") {
+      startShooting();
+    }
   }
 });
 
 document.addEventListener("keyup", (event) => {
-  delete keysPressed[event.key];
-  if (Object.keys(keysPressed).length === 0) {
-    player.style.backgroundImage = "url('./StillShip1.png')";
-  }
-  // Stop shooting when space is released
-  if (event.key === " ") {
-    stopShooting();
+  if (!paused && !gameOver) {
+    delete keysPressed[event.key];
+    if (Object.keys(keysPressed).length === 0) {
+      player.style.backgroundImage = "url('./images/StillShip1.png')";
+    }
+    if (event.key === " ") {
+      stopShooting();
+    }
   }
 });
 
-createChickens();
+setInterval(() => {
+  spawns += 1;
+}, 30000);
 gameLoop();

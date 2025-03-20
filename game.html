@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Space Invaders</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="./images/chicken.png">
+
+  </head>
+  <body>
+    <div class="info">
+      <div class="score" id="score">Score: 0</div>    
+      <div id="hp"><img id="changeHp" src="./images//fullhp.png" alt="" srcset=""></div>
+      <div id="timer"></div>
+    <div id="fps">FPS: 0</div>
+  </div>
+  <br>
+  <div id="game">
+      <div class="background"></div>
+      <div class="player" id="player"></div>
+      <div id="pauseMessage" class="hidden">
+        <div id="menu">
+          <a><h2 class="menu-item">Continue</h2></a>
+         
+          <a href="game.html"><h2 class="menu-item">Restart</h2></a>
+          <a href="index.html"><h2 class="menu-item">Main Menu</h2></a>
+        </div>
+      </div>
+      <div id="gameOverBox" class="hidden">
+        <h1>Game Over</h1>
+        <p id="finalScore"></p>
+        <p id="finalTime"></p>
+        <button id="restartButton">Restart</button>
+      </div>
+    </div>
+    </div>
+    <script src="sounds.js"></script>
+    <script src="chicken.js"></script>
+    <script src="gun.js"></script>
+    <script src="utils.js"></script>
+    <script src="leaderboard.js"></script>
+    <script src="game.js"></script>
+  </body>
+  <script>
+    const menuItems = document.querySelectorAll(".menu-item");
+    let currentIndex = 0;
+
+    function updateHighlight() {
+      menuItems.forEach((item, index) => {
+        // switchAudio();
+        item.style.color = index === currentIndex ? "white" : "grey";
+      });
+    }
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowDown") {
+        currentIndex = (currentIndex + 1) % menuItems.length;
+        updateHighlight();
+      } else if (event.key === "ArrowUp") {
+        currentIndex =
+          (currentIndex - 1 + menuItems.length) % menuItems.length;
+        updateHighlight();
+      } else if (event.key === "Enter") {
+        if (currentIndex === 0){
+          paused = !paused;
+          if (paused) {
+              pauseMessage.classList.remove("hidden");
+              pauseMessage.classList.add("visible");
+              pausedStartTime = Date.now();
+            } else {
+              pauseMessage.classList.remove("visible");
+              pauseMessage.classList.add("hidden");
+              pausedTime += Date.now() - pausedStartTime;
+              lastChickenSpawnTime += Date.now() - pausedStartTime;
+              lastcshoot += Date.now() - pausedStartTime;
+            }
+        }
+        menuItems[currentIndex].click();
+      }
+    });
+    menuItems.forEach((item, index) => {
+      item.addEventListener("mouseenter", () => {
+        currentIndex = index;
+        updateHighlight();
+      });
+    });
+    updateHighlight();
+  </script>
+</html>

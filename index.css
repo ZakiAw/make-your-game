@@ -1,0 +1,73 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #000;
+  color: white;
+  margin: 0;
+  font-family: bit;
+}
+
+@font-face {
+  font-family: bit;
+  src: url(./font/8bit.ttf);
+}
+
+#menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 1280px;
+  height: 1080px;
+  border: 2px solid white;
+  overflow: hidden;
+  background-image: url("/images/mainbg.gif");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: -100px 0px;
+}
+
+a {
+  text-decoration: none;
+}
+
+h2 {
+  color: white;
+  font-size: 50px;
+  border-radius: 10px;
+  transition: color 0.3s ease-out 100ms;
+}
+
+h2:hover {
+  color: red;
+}
+
+#game-created {
+  color: white;
+  font-size: 32px;
+  position: relative;
+  bottom: -27%;
+}
+
+.small-text {
+  font-size: 13px;
+}
+
+
+
+#player-name {
+  width: 300px;
+  padding: 10px;
+  font-size: 18px;
+  border-radius: 5px;
+  border: 1px solid #61dafb;
+  outline: none;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#player-name:focus {
+  border-color: #fff;
+}
