@@ -1,4 +1,4 @@
-# Make Your Game
+# JS Space Invaders
 
 A retro-style browser game where you control a ship, avoid obstacles, and shoot enemies. Features sound effects, 8-bit style graphics, and a persistent local leaderboard.
 
