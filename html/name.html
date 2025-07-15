@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Space Invaders</title>
+    <link rel="stylesheet" href="../css/index.css" />
+    <link rel="icon" type="image/x-icon" href="../images/chicken.png">
+    <script src="../js/sounds.js"></script>
+  </head>
+  <body>
+    <div id="menu">
+        <h1>Enter your name</h1>
+        <input type="text" id="name" placeholder="Your name" />
+        <a href="game.html" id="start-game"><h2 class="menu-item">Start Game</h2></a>
+      </div>
+    <script src="../js/game.js"></script>
+    <script>
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          history.back();
+        }
+      });
+    </script>
+  </body>
+</html>

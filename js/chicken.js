@@ -22,13 +22,13 @@ function moveChickens() {
       health--;
       hitAudio();
       if (health == 2) {
-        changeHp.src = "./images/2hp.png";
+        changeHp.src = "../images/2hp.png";
       }
       if (health == 1) {
-        changeHp.src = "./images/1hp.png";
+        changeHp.src = "../images/1hp.png";
       }
       if (health == 0) {
-        changeHp.src = "./images/0hp.png";
+        changeHp.src = "../images/0hp.png";
         showGameOver();
       }
       chicken.style.top = "0px";
@@ -62,14 +62,14 @@ function moveCBullets() {
         Cbullets.splice(index, 1);
         hitAudio();
         if (health == 0) {
-          changeHp.src = "./images/0hp.png";
+          changeHp.src = "../images/0hp.png";
           showGameOver();
         }
         if (health == 1) {
-          changeHp.src = "./images/1hp.png";
+          changeHp.src = "../images/1hp.png";
         }
         if (health == 2) {
-          changeHp.src = "./images/2hp.png";
+          changeHp.src = "../images/2hp.png";
         }
       }
     }

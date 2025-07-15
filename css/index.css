@@ -11,7 +11,7 @@ body {
 
 @font-face {
   font-family: bit;
-  src: url(./font/8bit.ttf);
+  src: url(../font/8bit.ttf);
 }
 
 #menu {
@@ -23,7 +23,7 @@ body {
   height: 1080px;
   border: 2px solid white;
   overflow: hidden;
-  background-image: url("/images/mainbg.gif");
+  background-image: url("../images/mainbg.gif");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: -100px 0px;
@@ -70,4 +70,22 @@ h2:hover {
 
 #player-name:focus {
   border-color: #fff;
+}
+
+#leaderboard {
+  color: white;
+  font-size: 32px;
+  margin-top: 20px;
+  text-align: center;
+}
+
+#leaderboard ol {
+  padding-left: 0;
+  list-style-position: inside;
+}
+
+#leaderboard li {
+  margin: 10px 0;
+  font-family: bit;
+  font-size: 32px;
 }

@@ -31,9 +31,7 @@ function showGameOver() {
   const finalScore = score;
   const finalTime = timerDisplay.textContent;
 
-  document.getElementById(
-    "finalScore"
-  ).textContent = `Your Score: ${finalScore}`;
+  document.getElementById("finalScore").textContent = `Your Score: ${finalScore}`;
   document.getElementById("finalTime").textContent = `${finalTime}`;
 
   const gameOverBox = document.getElementById("gameOverBox");
@@ -41,9 +39,20 @@ function showGameOver() {
 
   gameOver = true;
 
-  updateLead(playerName,score)
+
   cancelAnimationFrame(gameLoop);
   lossAudio();
+
+  // Add event listeners for the buttons
+  document.getElementById("restartButton").onclick = function() {
+    saveScore(finalScore);
+    window.location.reload();
+  };
+
+  document.getElementById("endButton").onclick = function() {
+    saveScore(finalScore); // Save score before leaving
+    window.location.href = "leaderboard.html";
+  };
 }
 
 // natsheh++

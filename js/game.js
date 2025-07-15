@@ -66,14 +66,14 @@ function damage() {
       chickens.splice(chickenIndex, 1);
       hitAudio();
       if (health == 0) {
-        changeHp.src = "./images/0hp.png";
+        changeHp.src = "../images/0hp.png";
         showGameOver();
       }
       if (health == 1) {
-        changeHp.src = "./images/1hp.png";
+        changeHp.src = "../images/1hp.png";
       }
       if (health == 2) {
-        changeHp.src = "./images/2hp.png";
+        changeHp.src = "../images/2hp.png";
       }
     }
   });
@@ -81,6 +81,20 @@ function damage() {
 
 let lastcshoot = 0;
 let lastChickenSpawnTime = 0;
+
+// At game over, prompt for name and save score
+function saveScore(finalScore) {
+    const playerName = localStorage.getItem("playerName") || "Anonymous";
+    const scores = JSON.parse(localStorage.getItem('leaderboard') || '[]');
+    scores.push({ name: playerName, score: finalScore });
+
+    // Sort scores descending and keep top 10
+    scores.sort((a, b) => b.score - a.score);
+    const topScores = scores.slice(0, 10);
+
+    localStorage.setItem('leaderboard', JSON.stringify(topScores));
+}
+
 // Game loop
 function gameLoop() {
   const currentTime = Date.now();
@@ -130,7 +144,7 @@ document.addEventListener("keydown", (event) => {
       event.key === "ArrowUp" ||
       event.key === "ArrowLeft"
     )
-      player.style.backgroundImage = "url('./images/MovingShip1.png')";
+      player.style.backgroundImage = "url('../images/MovingShip1.png')";
     if (event.key === " ") {
       startShooting();
     }
@@ -141,7 +155,7 @@ document.addEventListener("keyup", (event) => {
   if (!paused && !gameOver) {
     delete keysPressed[event.key];
     if (Object.keys(keysPressed).length === 0) {
-      player.style.backgroundImage = "url('./images/StillShip1.png')";
+      player.style.backgroundImage = "url('../images/StillShip1.png')";
     }
     if (event.key === " ") {
       stopShooting();

@@ -10,7 +10,7 @@ body {
 }
 @font-face {
   font-family: bit;
-  src: url(./font/8bit.ttf);
+  src: url(../font/8bit.ttf);
 }
 #game {
   position: relative;
@@ -23,7 +23,7 @@ body {
   z-index: 1;
 }
 .background {
-  background-image: url(./images/Space.png);
+  background-image: url(../images/Space.png);
   position: absolute;
   top: -1930px;
   left: 0;
@@ -41,7 +41,7 @@ body {
   left: 50%;
   width: 80px;
   height: 80px;
-  background-image: url(./images/StillShip1.png);
+  background-image: url(../images/StillShip1.png);
   background-size: cover;
   /* background-color: white;
   clip-path: polygon(66% 12%,59% -14%, -32% 100%, 134% 100%) */
@@ -51,7 +51,7 @@ body {
   position: absolute;
   width: 80px;
   height: 40px;
-  background-image: url(./images/chicken.png);
+  background-image: url(../images/chicken.png);
   background-size: cover;
 }
 
@@ -155,4 +155,21 @@ a{
   100% {
     transform: translateY(1920px); /* Adjust this value based on your image height */
   }
+}
+
+.gameover-btn {
+  padding: 10px 20px;
+  font-size: 20px;
+  cursor: pointer;
+  margin: 10px;
+  border-radius: 8px;
+  background: #222;
+  color: #fff;
+  border: 2px solid #fff;
+  transition: background 0.2s, color 0.2s;
+}
+
+.gameover-btn:hover {
+  background: #fff;
+  color: #222;
 }

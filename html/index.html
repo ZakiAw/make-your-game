@@ -4,14 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Space Invaders</title>
-    <link rel="stylesheet" href="index.css" />
-    <link rel="icon" type="image/x-icon" href="./images/chicken.png">
-    <script src="sounds.js"></script>
+    <link rel="stylesheet" href="../css/index.css" />
+    <link rel="icon" type="image/x-icon" href="../images/chicken.png">
+    <script src="../js/sounds.js"></script>
   </head>
   <body>
     <div id="menu">
-      <a href="game.html"><h2 class="menu-item">Start game</h2></a>
-      <a href="#"><h2 class="menu-item">Leaderboard</h2></a>
+      <a href="name.html"><h2 class="menu-item">Start game</h2></a>
+      <a href="leaderboard.html"><h2 class="menu-item">Leaderboard</h2></a>
       <a href="settings.html"><h2 class="menu-item">Settings</h2></a>
       <p id="game-created">Game Created by Mohamed Natsheh And Zaki</p>
     </div>
@@ -38,6 +38,8 @@
 
         } else if (event.key === "Enter" || event.key === " ") {
           menuItems[currentIndex].click();
+        } else if (event.key === "Escape") {
+          history.back();
         }
       });
       menuItems.forEach((item, index) => {
